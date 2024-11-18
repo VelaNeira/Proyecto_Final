@@ -9,8 +9,8 @@ lifecycleRuntimeKtx = "2.8.6"
 activityCompose = "1.9.2"
 composeBom = "2024.04.01"
 
-androidx-room="2.5.0"
-ksp="1.9.0-1.0.13"
+androidx-room = "2.5.0"
+ksp = "1.9.0-1.0.13"
 navigationRuntimeKtx = "2.8.2"
 navigationCompose = "2.8.2"
 appcompat = "1.7.0"
@@ -44,4 +44,4 @@ androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview"
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
-ksp={ id = "com.google.devtools.ksp", version.ref = "ksp" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

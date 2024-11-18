@@ -70,6 +70,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.espresso.core)
     ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)

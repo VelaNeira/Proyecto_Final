@@ -1,11 +1,13 @@
 package com.example.parcial2.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -25,51 +27,74 @@ fun RegistroScreen(navController: NavHostController) {
     var error by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(false) }
 
+    // Fondo del contenedor
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .background(MaterialTheme.colorScheme.background)
+            .padding(32.dp), // Padding alrededor de la columna
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.Center
     ) {
+        // Título de la pantalla
         Text(
-            "Registro de Nuevo Mesero",
-            style = MaterialTheme.typography.headlineMedium
+            text = "Registro de Nuevo Mesero",
+            style = MaterialTheme.typography.headlineMedium.copy(
+                fontWeight = FontWeight.Bold
+            ),
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.padding(bottom = 32.dp)
         )
 
-        TextField(
+        // Campo de texto para el nombre de usuario
+        OutlinedTextField(
             value = username,
             onValueChange = { username = it },
             label = { Text("Usuario") },
-            modifier = Modifier.fillMaxWidth(),
+            isError = error.isNotEmpty(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
             enabled = !isLoading
         )
 
-        TextField(
+        // Campo de texto para la contraseña
+        OutlinedTextField(
             value = password,
             onValueChange = { password = it },
             label = { Text("Contraseña") },
             visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth(),
+            isError = error.isNotEmpty(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
             enabled = !isLoading
         )
 
-        TextField(
+        // Campo de texto para confirmar la contraseña
+        OutlinedTextField(
             value = confirmPassword,
             onValueChange = { confirmPassword = it },
             label = { Text("Confirmar Contraseña") },
             visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth(),
+            isError = error.isNotEmpty(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
             enabled = !isLoading
         )
 
+        // Mostrar error si es necesario
         if (error.isNotEmpty()) {
             Text(
                 text = error,
-                color = MaterialTheme.colorScheme.error
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(bottom = 16.dp)
             )
         }
 
+        // Botón para registrar el nuevo usuario
         Button(
             onClick = {
                 scope.launch {
@@ -106,9 +131,15 @@ fun RegistroScreen(navController: NavHostController) {
                     }
                 }
             },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = !isLoading && username.isNotBlank() &&
-                    password.isNotBlank() && confirmPassword.isNotBlank()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp)
+                .height(56.dp),
+            enabled = !isLoading && username.isNotBlank() && password.isNotBlank() && confirmPassword.isNotBlank(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
+            )
         ) {
             if (isLoading) {
                 CircularProgressIndicator(
@@ -116,14 +147,16 @@ fun RegistroScreen(navController: NavHostController) {
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             } else {
-                Text("Registrar")
+                Text("Registrar", style = MaterialTheme.typography.bodyLarge)
             }
         }
 
+        // Enlace de cancelar
         TextButton(
-            onClick = { navController.popBackStack() }
+            onClick = { navController.popBackStack() },
+            modifier = Modifier.padding(top = 16.dp)
         ) {
-            Text("Cancelar")
+            Text("Cancelar", style = MaterialTheme.typography.bodyMedium)
         }
     }
 }
